@@ -1,0 +1,13 @@
+services:
+  teamUndSpielerBackend:
+    depends_on:
+      - teamundspielerdb
+    build: 
+      context: ../teamUndSpielerPJ_Back_10_10_2024
+      platforms:
+        - "linux/arm64"
+        - "linux/amd64"
+    ports:
+      - 8181:8080
+    env_file:
+      - ../teamUndSpielerPJ_Back_10_10_2024/.env.testing

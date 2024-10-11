@@ -35,26 +35,44 @@ public class SecurityConfiguration {
         this.rsaKeys = rsaKeys;
     }
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 配置 CORS
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> {
                     httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/*")
-                        .permitAll()
-                       /* .requestMatchers("/api/v1/auth/*")
-                        .permitAll()*/
+                        .anyRequest().permitAll() // allow all req
+                )
+                .build();
+    }
+
+    /*
+     @Bean
+     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+         return http
+                 .csrf(csrf -> csrf.disable())
+                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                 .sessionManagement(httpSecuritySessionManagementConfigurer -> {
+                     httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                 })
+                 .httpBasic(Customizer.withDefaults())
+                 .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))
+                 .authorizeHttpRequests(request -> request
+                         .requestMatchers("/api/v1/*")
+                         .permitAll()
+                        *//* .requestMatchers("/api/v1/auth/*")
+                        .permitAll()*//*
                         .anyRequest()
                         .authenticated()
                 ).build();
     }
-
+*/
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

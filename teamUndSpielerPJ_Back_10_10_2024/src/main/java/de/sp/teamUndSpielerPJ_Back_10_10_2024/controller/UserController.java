@@ -1,9 +1,9 @@
 package de.sp.teamUndSpielerPJ_Back_10_10_2024.controller;
 
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.dtos.*;
-import de.sp.teamUndSpielerPJ_Back_10_10_2024.services.SpielerService;
-import de.sp.teamUndSpielerPJ_Back_10_10_2024.services.TeamService;
-import de.sp.teamUndSpielerPJ_Back_10_10_2024.services.UserService;
+import de.sp.teamUndSpielerPJ_Back_10_10_2024.entities.User;
+import de.sp.teamUndSpielerPJ_Back_10_10_2024.mapper.UserMapper;
+import de.sp.teamUndSpielerPJ_Back_10_10_2024.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,31 +22,17 @@ public class UserController {
     private TeamService teamService;
     @Autowired
     private SpielerService spielerService;
+    @Autowired
+    private AuthentificationService authentificationService;
+    @Autowired
+    private MatchService matchService;
 
-    @PostMapping("/register")
-    public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
-        UserDto registeredUser = userService.registerUser(userDto);
-        return ResponseEntity.ok(registeredUser);
-    }
 
-    @PostMapping("/login")
-    public ResponseEntity<UserDto> loginUser(@RequestParam String username, @RequestParam String password) {
-        return userService.loginUser(username, password)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(401).build());
-    }
-
-    @PostMapping("/teams")
-    public ResponseEntity<TeamDto> createTeam(@RequestBody TeamDto teamDto) {
-        TeamDto createdTeam = teamService.createTeam(teamDto);
-        return ResponseEntity.ok(createdTeam);
-    }
-
-    @GetMapping("/teams")
-    public ResponseEntity<List<TeamDto>> getAllTeams() {
-        List<TeamDto> teams = teamService.getAllTeams();
+   /* @GetMapping("/teams")
+    public ResponseEntity<List<TeamDtoRespon>> getAllTeams() {
+        List<TeamDtoRespon> teams = teamService.getAllTeams();
         return ResponseEntity.ok(teams);
-    }
+    }*/
 
    /* @PostMapping("/teams/{teamId}/players")
     public ResponseEntity<SpielerDto> createPlayer(@PathVariable Long teamId, @RequestBody SpielerDto spielerDto) {
@@ -55,21 +41,40 @@ public class UserController {
         return ResponseEntity.ok(createdPlayer);
     }*/
 
-    @GetMapping("/teams/{teamId}/players")
+    // Initialize team for a user
+    @PostMapping("/initializeTeam/{userId}")
+    public ResponseEntity<TeamDtoRespon> initializeTeam(@PathVariable Long userId) {
+        UserDto userDto = userService.findById(userId);
+        if (userDto == null) {
+            return ResponseEntity.notFound().build();
+        }
+        TeamDtoRespon teamDto = authentificationService.initializeTeam(userDto);
+        return ResponseEntity.ok(teamDto);
+    }
+
+   /* @GetMapping("/teams/{teamId}/players")
     public ResponseEntity<List<SpielerDto>> getPlayersByTeamId(@PathVariable Long teamId) {
         List<SpielerDto> players = spielerService.getPlayersByTeamId(teamId);
         return ResponseEntity.ok(players);
-    }
+    }*/
 
     // matches zwischen Benutzern und anderen Benutzern
-    @PostMapping("/matches")
-    public ResponseEntity<Void> createMatch(@RequestBody MatchDto matchDto) {
-        return ResponseEntity.ok().build();
+    @PostMapping("/creatematch")
+    public ResponseEntity<MatchResultDto> createMatch(@RequestBody MatchDto matchDto) {
+        MatchResultDto matchResultDto = matchService.createMatch(matchDto);
+        return ResponseEntity.ok(matchResultDto);
     }
 
+    @GetMapping("/teams/{id}")
+    public ResponseEntity<TeamDtoWithPlayer> getTeamWithPlayers(@PathVariable Long id) {
+        TeamDtoWithPlayer teamDtoWithPlayer = teamService.getTeamWithPlayersById(id);
+        return ResponseEntity.ok(teamDtoWithPlayer);
+    }
+
+
     // mit MatchId prüfen MatchResultDto
-    @GetMapping("/matches/{matchId}")
+   /* @GetMapping("/matches/{matchId}")
     public ResponseEntity<MatchResultDto> getMatchResult(@PathVariable Long matchId) {
         return ResponseEntity.ok().build();
-    }
+    }*/
 }

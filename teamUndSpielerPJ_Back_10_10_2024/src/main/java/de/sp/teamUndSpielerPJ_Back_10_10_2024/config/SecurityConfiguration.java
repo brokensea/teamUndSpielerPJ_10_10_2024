@@ -36,7 +36,7 @@ public class SecurityConfiguration {
     }
 
 
-      @Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
@@ -51,21 +51,22 @@ public class SecurityConfiguration {
                 )
                 .build();
     }
-   /*
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .sessionManagement(httpSecuritySessionManagementConfigurer -> {
-                    httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                })
-                .httpBasic(Customizer.withDefaults())
-                .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/*")
-                        .permitAll()
-                       *//* .requestMatchers("/api/v1/auth/*")
+
+    /*
+     @Bean
+     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+         return http
+                 .csrf(csrf -> csrf.disable())
+                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                 .sessionManagement(httpSecuritySessionManagementConfigurer -> {
+                     httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                 })
+                 .httpBasic(Customizer.withDefaults())
+                 .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))
+                 .authorizeHttpRequests(request -> request
+                         .requestMatchers("/api/v1/*")
+                         .permitAll()
+                        *//* .requestMatchers("/api/v1/auth/*")
                         .permitAll()*//*
                         .anyRequest()
                         .authenticated()

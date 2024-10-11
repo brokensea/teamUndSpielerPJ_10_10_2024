@@ -1,6 +1,7 @@
 package de.sp.teamUndSpielerPJ_Back_10_10_2024.services;
 
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.dtos.TeamDtoRespon;
+import de.sp.teamUndSpielerPJ_Back_10_10_2024.dtos.TeamDtoWithPlayer;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.dtos.UserDto;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.entities.Team;
 
@@ -14,4 +15,7 @@ public interface TeamService {
     TeamDtoRespon getTeamById(Long id);
 
     Team saveTeamIfNotExists(Team team);
+
+    TeamDtoWithPlayer getTeamWithPlayersById(Long id);
+
 }

@@ -52,8 +52,7 @@ public class UserController {
         return ResponseEntity.ok(teamDto);
     }
 
-/*
-    @GetMapping("/teams/{teamId}/players")
+   /* @GetMapping("/teams/{teamId}/players")
     public ResponseEntity<List<SpielerDto>> getPlayersByTeamId(@PathVariable Long teamId) {
         List<SpielerDto> players = spielerService.getPlayersByTeamId(teamId);
         return ResponseEntity.ok(players);
@@ -65,6 +64,13 @@ public class UserController {
         MatchResultDto matchResultDto = matchService.createMatch(matchDto);
         return ResponseEntity.ok(matchResultDto);
     }
+
+    @GetMapping("/teams/{id}")
+    public ResponseEntity<TeamDtoWithPlayer> getTeamWithPlayers(@PathVariable Long id) {
+        TeamDtoWithPlayer teamDtoWithPlayer = teamService.getTeamWithPlayersById(id);
+        return ResponseEntity.ok(teamDtoWithPlayer);
+    }
+
 
     // mit MatchId prüfen MatchResultDto
    /* @GetMapping("/matches/{matchId}")

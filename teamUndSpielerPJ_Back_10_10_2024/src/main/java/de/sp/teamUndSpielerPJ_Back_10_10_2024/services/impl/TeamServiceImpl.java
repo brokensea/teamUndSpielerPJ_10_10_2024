@@ -1,11 +1,13 @@
 package de.sp.teamUndSpielerPJ_Back_10_10_2024.services.impl;
 
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.dtos.TeamDtoRespon;
+import de.sp.teamUndSpielerPJ_Back_10_10_2024.dtos.TeamDtoWithPlayer;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.dtos.UserDto;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.entities.PlayerType;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.entities.Spieler;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.entities.Team;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.entities.User;
+import de.sp.teamUndSpielerPJ_Back_10_10_2024.mapper.TeamDtoWithPlayerMapper;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.mapper.TeamMapper;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.repositories.TeamRepository;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.repositories.UserRepository;
@@ -124,5 +126,12 @@ public class TeamServiceImpl implements TeamService {
             return teamRepository.save(team);
         }
         return team;
+    }
+
+    @Override
+    public TeamDtoWithPlayer getTeamWithPlayersById(Long id) {
+        Team team = teamRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Team not found with id: " + id));
+        return TeamDtoWithPlayerMapper.toDto(team);
     }
 }

@@ -18,6 +18,8 @@ public class MatchResult {
     @JoinColumn(name = "team_b_id")
     private Team teamB;
 
+    @ManyToOne(cascade = CascadeType.ALL) // 或使用 CascadeType.PERSIST
+    @JoinColumn(name = "gewinn_team_id")
     private Team gewinnTeam;
 
     // Getters and Setters

@@ -19,6 +19,9 @@ public class Spieler {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    public Spieler() {
+    }
+
     // Getters and Setters
 
     public Long getId() {

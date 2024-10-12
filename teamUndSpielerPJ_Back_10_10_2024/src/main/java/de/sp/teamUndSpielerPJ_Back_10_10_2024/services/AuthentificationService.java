@@ -18,7 +18,6 @@ public class AuthentificationService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private TokenService tokenService;
-
     private TeamServiceImpl teamService;
 
     public AuthentificationService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService, TeamServiceImpl teamService) {
@@ -43,7 +42,6 @@ public class AuthentificationService {
 
     public TeamDtoRespon initializeTeam(UserDto userDto) {
         User user = UserMapper.toEntity(userDto);
-
         try {
             // Initialize the TeamDto, this can be customized based on your requirements
             TeamDtoRespon teamDto = new TeamDtoRespon(user.getId(), user.getUsername() + "'s Team", user.getId());

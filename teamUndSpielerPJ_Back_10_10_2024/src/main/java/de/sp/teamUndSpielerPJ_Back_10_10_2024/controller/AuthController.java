@@ -5,7 +5,6 @@ import de.sp.teamUndSpielerPJ_Back_10_10_2024.dtos.auth.AuthDto;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.dtos.auth.JwtDto;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.entities.User;
 import de.sp.teamUndSpielerPJ_Back_10_10_2024.services.AuthentificationService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -26,12 +25,22 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public User signup(@RequestBody AuthDto dto) {
-        return authentificationService.signUp(dto);
+    public ResponseEntity<?> signup(@RequestBody AuthDto dto) {
+        try {
+            User user = authentificationService.signUp(dto);
+            return ResponseEntity.ok(user);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    @GetMapping("/logout")
+   /* @PostMapping("/signup")
+    public User signup(@RequestBody AuthDto dto) {
+        return authentificationService.signUp(dto);
+    }*/
+
+   /* @GetMapping("/logout")
     public void logout(HttpSession session) {
         session.invalidate();
-    }
+    }*/
 }

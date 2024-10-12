@@ -16,18 +16,24 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Override
+   /* @Override
     public UserDto registerUser(UserDto userDto) {
+        // Check if the username already exists
+        if (userRepository.findByUsername(userDto.username()).isPresent()) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+
         User user = UserMapper.toEntity(userDto);
-        // 密码加密等逻辑
+        // Password encryption logic here
         return UserMapper.toDto(userRepository.save(user));
     }
+
 
     @Override
     public Optional<UserDto> loginUser(String username, String password) {
         return userRepository.findByUsernameAndPassword(username, password)
                 .map(UserMapper::toDto);
-    }
+    }*/
 
     @Override
     public UserDto findById(Long id) {

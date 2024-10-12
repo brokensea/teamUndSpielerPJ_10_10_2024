@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class User implements UserDetails {
 
     @Id
@@ -46,6 +46,7 @@ public class User implements UserDetails {
     public String getUsername() {
         return username;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

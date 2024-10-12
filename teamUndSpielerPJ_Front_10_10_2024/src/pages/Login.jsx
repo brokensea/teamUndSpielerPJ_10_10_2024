@@ -29,7 +29,7 @@ const LoginPage = () => {
                 sessionStorage.setItem("token", data.token);
                 setMessage(`Login erfolgreich! Token: ${data.token}`); // 登录成功反馈
                 setIsSuccess(true);
-                navigate("/dashboard");
+                navigate("/initializeTeam");
             } else {
                 const errorData = await response.json();
                 setMessage(`Login fehlgeschlagen: ${errorData.message || 'Bitte versuchen Sie es erneut.'}`); // 登录失败反馈
